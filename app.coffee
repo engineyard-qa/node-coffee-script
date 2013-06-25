@@ -1,8 +1,11 @@
-express = require('express')
-app     = express.createServer()
-port    = process.env.PORT || 3000
+var express = require('express');
+var app     = express.createServer();
+var port    = process.env.PORT || 3000;
 
-app.get '/', (request, response) ->
-  response.send 'Hello Engine Yard Cloud from CoffeeScript!'
+app.get('/', function(request, response) {
+  var proto = request.header('X-Forwarded-Proto');
+  response.send('Hello Engine Yard Cloud!\r\n' + proto + '\r\n');
+  console.log(request.header('X-Forwarded-Proto'));
+});
 
-app.listen port
+app.listen(port);
